@@ -1,3 +1,4 @@
+import { jsDocComment } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { ToDo } from 'src/app/ToDo';
 
@@ -8,38 +9,29 @@ import { ToDo } from 'src/app/ToDo';
 })
 export class TodosComponent {
   todos: ToDo[];
+  localItem: string | null;
 
   constructor() {
-    this.todos = [
-      {
-        sno: 1,
-        title: 'This is title1',
-        desc: 'This is Description',
-        active: true
-      },
-      {
-        sno: 2,
-        title: 'This is title2',
-        desc: 'This is Description',
-        active: true
-      },
-      {
-        sno: 3,
-        title: 'This is title3',
-        desc: 'This is Description',
-        active: true
-      }
-    ];
+    this.localItem = localStorage.getItem("todos");
+    if(this.localItem==null){
+      this.todos = [];
+    }
+    else {
+      this.todos = JSON.parse(this.localItem);
+    }
+    
   }
 
   deleteTodo(todo:ToDo){
     console.log(todo);
     const index = this.todos.indexOf(todo);
     this.todos.splice(index,1);
+    localStorage.setItem("todos",JSON.stringify(this.todos));
   }
 
   addTodo(todo:ToDo){
     console.log(todo);
     this.todos.push(todo);
+    localStorage.setItem("todos",JSON.stringify(this.todos));
   }
 }
