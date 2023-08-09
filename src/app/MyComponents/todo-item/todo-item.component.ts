@@ -8,14 +8,21 @@ import { ToDo } from 'src/app/ToDo';
 })
 export class TodoItemComponent {
   @Input() todo!: ToDo;
+  @Input() i!: number;
 
-  @Output() todoDelete: EventEmitter<ToDo> = new EventEmitter; 
+  @Output() todoDelete: EventEmitter<ToDo> = new EventEmitter;
+  @Output() todoCheckbox: EventEmitter<ToDo> = new EventEmitter;
 
 
   constructor() { }
 
-  onClick(todo: ToDo){
+  onClick(todo: ToDo) {
     this.todoDelete.emit(todo);
     console.log("onClick method has been triggered...");
+  }
+
+  onDone(todo: ToDo) {
+    console.log("Marking as done...");
+    this.todoCheckbox.emit(todo);
   }
 }
